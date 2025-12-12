@@ -1,35 +1,99 @@
-# Let's build a neural network from scratch together.😝
+# CPP_Neural_Network — README.md
 
-## Project Overview
-Created a simple neural network using C++17 standard and the Eigen library that supports both forward and backward propagation.
+> Minimal neural network from scratch in modern C++ (with Eigen)
 
-By using only the sigmoid function as the activation function, the backpropagation process is very simple. With just a three-layer neural network structure consisting of an input layer, a hidden layer, and an output layer, this is a perfect case for beginners in deep learning.
+![status-badge](https://img.shields.io/badge/status-experimental-yellow) ![lang-badge](https://img.shields.io/badge/C%2B%2B-17-blue) ![eigen-badge](https://img.shields.io/badge/deps-Eigen3-lightgrey)
 
+## Overview
+
+This project implements a simple feed-forward neural network (input → hidden → output) with **sigmoid** activation and **backpropagation**. It’s intended for learners who want to understand the full training loop without heavy frameworks.
+
+### Features
+
+* C++17 implementation using the **Eigen** linear algebra library
+* Forward pass, loss computation, and gradient-based backprop
+* Trains on **MNIST** (handwritten digits) for demo purposes
+* Clear separation of headers (`include/`) and sources (`src/`)
+
+## Setup
+
+### Prerequisites
+
+* C++17 compiler (e.g., `g++`/`clang++`)
+* CMake (recommended) or `make`
+* **Eigen 3.3+** (headers only)
+
+On Ubuntu/Debian you can install Eigen via:
+
+```bash
+sudo apt-get update && sudo apt-get install -y libeigen3-dev
+```
+
+### Clone
+
+```bash
+git clone https://github.com/Kislay0/CPP_Neural_Network.git
+cd CPP_Neural_Network
+```
+
+### Build (CMake)
+
+```bash
+cmake -S . -B build -DCMAKE_BUILD_TYPE=Release
+cmake --build build -j
+```
+
+> **Alternative:** If a `Makefile` exists, simply run `make`.
+
+## Data: MNIST
+
+Place the MNIST IDX files in `mnist_dataset/`:
+
+```
+mnist_dataset/
+  train-images-idx3-ubyte
+  train-labels-idx1-ubyte
+  t10k-images-idx3-ubyte
+  t10k-labels-idx1-ubyte
+```
+
+You can obtain MNIST from the official sources or mirrored hosts. Ensure your loader points to this directory.
+
+## Run
+
+After building, run the produced executable (e.g., `./build/net`, `./build/netX`, or similar depending on your target name):
+
+```bash
+./build/net
+```
+
+Expected console output includes training progress metrics and a final accuracy snapshot.,<br>
 The program's output is as follows:
 ![results](assets/results.jpg)
 
-## MNIST Dataset Format
+## Project Structure
 
-The MNIST (Modified National Institute of Standards and Technology) dataset is a large database of handwritten digits commonly used for training and testing various machine learning models. Here's a detailed overview of its format:
-- Number of Images: The dataset contains a total of 70,000 images. This includes 60,000 training images and 10,000 test images.
-- Image Size: Each image is a 28x28 pixel grayscale image.
-- Classes: There are 10 classes, each representing a digit from 0 to 9.
+```
+assets/           # images/results used in README
+config/           # hyperparameters, settings (if provided)
+include/          # headers
+mnist_dataset/    # place dataset files here
+src/              # implementation
+```
 
-## Instructions
-### Prerequisites
-Make sure you have the following software installed:
-- libeigen3-dev/focal,focal,now 3.3.7-2 all [installed]
-- g++ (Ubuntu 7.5.0-6ubuntu2) 7.5.0
+## Extending
 
-### Clone the Repository
-```bash
-git clone https://github.com/Phoenix8215/build_neural_network_from_scratch_CPP.git
+* Swap sigmoid for ReLU/Tanh; add softmax output
+* Mini-batching and shuffling
+* Different optimizers (SGD w/ momentum, Adam)
+* Serialization of weights/biases
 
-cd build_neural_network_from_scratch_CPP
+## Troubleshooting
 
-make
+* **Eigen not found**: Verify include path (e.g., `/usr/include/eigen3`) and that your build system adds it.
+* **Slow builds**: Use `-O3 -march=native` for better performance in Release builds.
+* **Bad accuracy**: Check data normalization and label encoding; try smaller learning rates.
 
-./netX
-``````
-After running the above command, you should see the following output:
+<!-- ## License
 
+*Add a license file to clarify reuse.* -->
